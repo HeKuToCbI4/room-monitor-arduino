@@ -150,7 +150,6 @@ void loop() {
         Serial.println("Failed to read from DHT sensor!");
         return;
     }
-    
     printSensorData(data);
     delay(SAMPLING_PERIOD);
 }
