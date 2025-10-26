@@ -30,7 +30,7 @@ constexpr float BELGRADE_PRESSURE = 1013.25;
 MQUnifiedsensor MQ5("Arduino UNO", 5, 10, MQ5_PIN, "MQ-5");
 MQUnifiedsensor MQ135("Arduino UNO", 5, 10, MQ_135_PIN, "MQ-135");
 MQUnifiedsensor MQ7("Arduino UNO", 5, 10, MQ_7_PIN, "MQ-7");
-DHT dht(DHT_PIN, DHT22);
+// DHT dht(DHT_PIN, DHT22);
 Adafruit_AHTX0 aht;
 Adafruit_BMP280 bmp280_sensor;
 
@@ -85,7 +85,7 @@ void setup()
 
     // Initialize sensors
     setupMQ5();
-    dht.begin();
+    // dht.begin();
 
     // Initialize MQ135
     if (!calibrateMQSensor(MQ135, RATIO_MQ_135_CLEAN_AIR, "MQ-135"))
@@ -127,8 +127,8 @@ void setup()
 
 struct SensorData
 {
-    float temperature; // DHT22 one
-    float humidity; // DHT22 one
+    // float temperature; // DHT22 one
+    // float humidity; // DHT22 one
     float h2;
     float alcohol;
     float co2;
@@ -146,8 +146,8 @@ SensorData readSensors()
     SensorData data{};
 
     // Read DHT22
-    data.temperature = dht.readTemperature();
-    data.humidity = dht.readHumidity();
+    // data.temperature = dht.readTemperature();
+    // data.humidity = dht.readHumidity();
 
     // Read MQ5
     MQ5.update();
@@ -190,10 +190,10 @@ void printSensorData(const SensorData& data)
 {
     Serial.print(data.h2);
     Serial.print("|");
-    Serial.print(data.temperature);
-    Serial.print("|");
-    Serial.print(data.humidity);
-    Serial.print("|");
+    // Serial.print(data.temperature);
+    // Serial.print("|");
+    // Serial.print(data.humidity);
+    // Serial.print("|");
     Serial.print(data.alcohol);
     Serial.print("|");
     Serial.print(data.co2 + 400);
@@ -219,11 +219,11 @@ void loop()
     const SensorData data = readSensors();
 
     // Check for invalid readings
-    if (isnan(data.temperature) || isnan(data.humidity))
-    {
-        Serial.println("Failed to read from DHT sensor!");
-        return;
-    }
+    // if (isnan(data.temperature) || isnan(data.humidity))
+    // {
+    //     Serial.println("Failed to read from DHT sensor!");
+    //     return;
+    // }
     printSensorData(data);
     delay(SAMPLING_PERIOD);
 }
